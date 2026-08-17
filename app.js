@@ -2,7 +2,7 @@ const { GoogleGenAI } = require('@google/genai');
 const express = require('express');
 
 const app = express();
-const ai = new GoogleGenAI({});
+const ai = new GoogleGenAI({apiKey: process.env.GEMINI_API_KEY});
 
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
