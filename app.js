@@ -17,7 +17,21 @@ app.get('/', async(req, res) => {
             });
             return res.render('index.ejs', {prompt: req.query.prompt, result: result.output_text})
         } catch (err) {
-            return res.send(err.message);
+            console.error("--- DETAILED GEMINI ERROR START ---");
+            console.dir(error, { depth: null }); 
+            console.error("--- DETAILED GEMINI ERROR END ---");
+
+            // 2. Extract specific Google API fields safely
+            const apiStatus = error.status || "UNKNOWN_STATUS";
+            const apiMessage = error.message || "Generic API Error";
+            
+            // 3. Send detailed response to your frontend or network tab
+            return res.status(400).json({
+                success: false,
+                error: apiMessage,
+                status: apiStatus,
+                rawDetails: error.errorDetails || null
+            });
         }
     } 
     res.render('index.ejs');
