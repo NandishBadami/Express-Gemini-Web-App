@@ -17,21 +17,19 @@ app.get('/', async(req, res) => {
             });
             return res.render('index.ejs', {prompt: req.query.prompt, result: result.output_text})
         } catch (error) {
-            console.error("--- DETAILED GEMINI ERROR START ---");
-            console.dir(error, { depth: null }); 
-            console.error("--- DETAILED GEMINI ERROR END ---");
+            console.error("--- REAL GOOGLE ERROR ---");
+  
+  // The SDK hides the server's real response message here:
+  if (error.body) {
+    console.error("Server Body Error:", error.body);
+  } else {
+    console.dir(error, { depth: null });
+  }
 
-            // 2. Extract specific Google API fields safely
-            const apiStatus = error.status || "UNKNOWN_STATUS";
-            const apiMessage = error.message || "Generic API Error";
-            
-            // 3. Send detailed response to your frontend or network tab
-            return res.status(400).json({
-                success: false,
-                error: apiMessage,
-                status: apiStatus,
-                rawDetails: error.errorDetails || null
-            });
+  res.status(400).json({
+    success: false,
+    googleSays: error.body ? JSON.parse(error.body) : error.message
+  });
         }
     } 
     res.render('index.ejs');
