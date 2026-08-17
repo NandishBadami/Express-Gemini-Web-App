@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gemini</title>
+</head>
+<body>
+    <% if(locals.prompt) { %>
+    <hr>
+        <p>Prompt: <%= prompt %></p>
+        <p>Result: <%= result %></p>
+    <hr>
+    <% } %>
+    <a href="/"><button>Clear</button></a>
+    <br><br>
+    <form>
+        Prompt:
+        <input type="text" name="prompt">
+        <button type="submit">Ask</button>
+    </form>
+</body>
+</html>
