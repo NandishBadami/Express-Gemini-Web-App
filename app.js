@@ -10,11 +10,15 @@ app.use(express.urlencoded({extended: true}));
 
 app.get('/', async(req, res) => {
     if(req.query.prompt) {
-        const result = await ai.interactions.create({
-            model: 'gemini-3.6-flash',
-            input: req.query.prompt
-        });
-        return res.render('index.ejs', {prompt: req.query.prompt, result: result.output_text})
+        try {
+            const result = await ai.interactions.create({
+                model: 'gemini-3.6-flash',
+                input: req.query.prompt
+            });
+            return res.render('index.ejs', {prompt: req.query.prompt, result: result.output_text})
+        } catch (err) {
+            return res.send(err.message);
+        }
     } 
     res.render('index.ejs');
 });
