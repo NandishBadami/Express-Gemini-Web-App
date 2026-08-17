@@ -16,7 +16,7 @@ app.get('/', async(req, res) => {
                 input: req.query.prompt
             });
             return res.render('index.ejs', {prompt: req.query.prompt, result: result.output_text})
-        } catch (err) {
+        } catch (error) {
             console.error("--- DETAILED GEMINI ERROR START ---");
             console.dir(error, { depth: null }); 
             console.error("--- DETAILED GEMINI ERROR END ---");
